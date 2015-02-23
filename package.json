@@ -10,5 +10,8 @@
   "scripts": {
     "start": "node index"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "rpi-cam-wrapper": "0.0.0"
+  }
 }
