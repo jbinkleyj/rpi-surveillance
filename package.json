@@ -7,5 +7,8 @@
     "type": "git",
     "url": "http://github.com/erming/rpi-cam"
   },
+  "scripts": {
+    "start": "node index"
+  },
   "license": "MIT"
 }
