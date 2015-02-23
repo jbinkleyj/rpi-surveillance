@@ -1,0 +1,11 @@
+{
+  "name": "rpi-cam",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Mattias Erming",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/erming/rpi-cam"
+  },
+  "license": "MIT"
+}
