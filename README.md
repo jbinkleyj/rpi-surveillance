@@ -1,4 +1,4 @@
-# rpi-cam
+# rpi-surveillance
 
 ## License
 
