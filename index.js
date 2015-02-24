@@ -1,9 +1,4 @@
-var express = require("express");
-
-function init() {
-  var app = express()
-    .use(express.static("client"))
-    .listen(8080);
-}
-
+#!/usr/bin/env node
+process.chdir(__dirname);
+var init = require("./src/server");
 init();
