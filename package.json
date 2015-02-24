@@ -1,11 +1,11 @@
 {
-  "name": "rpi-cam",
+  "name": "rpi-surveillance",
   "version": "0.0.0",
   "description": "",
   "author": "Mattias Erming",
   "repository": {
     "type": "git",
-    "url": "http://github.com/erming/rpi-cam"
+    "url": "http://github.com/erming/rpi-surveillance"
   },
   "scripts": {
     "start": "node index"
