@@ -1,21 +1,28 @@
 var express = require("express");
 var io = require("socket.io");
 var version = require("../package.json").version;
+var cam = require("./cam");
 var config = require("./config");
 
-module.exports = init;
+module.exports = start;
 
 var sockets;
 
-function init() {
+function start() {
+  cam();
+  serve();
+}
+
+function serve() {
   var port = config("port");
   var app = express()
     .use(express.static("client"))
+    .use("/images/", express.static("images"))
     .listen(port);
 
   sockets = io(app);
   sockets.on("connect", function(s) {
-    console.log(1);
+    init(s);
   });
 
   console.log("");
@@ -28,4 +35,8 @@ function init() {
   console.log("Server started!");
   console.log("Press ctrl-c to stop");
   console.log("");
+}
+
+function init(socket) {
+  socket.emit("init");
 }
