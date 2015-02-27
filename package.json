@@ -8,12 +8,17 @@
     "url": "http://github.com/erming/rpi-surveillance"
   },
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "test": "tape test/**/*.js | faucet"
   },
   "license": "MIT",
   "dependencies": {
     "express": "^4.12.0",
     "rpi-cam": "0.0.2",
     "socket.io": "^1.3.4"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^3.5.0"
   }
 }
