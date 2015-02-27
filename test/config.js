@@ -1,5 +1,5 @@
-var test = require("tape");
+var tape = require("tape");
 
-test("config", function(t) {
+tape("config", function(t) {
   t.end();
 });

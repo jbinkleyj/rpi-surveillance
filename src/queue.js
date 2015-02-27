@@ -1,22 +1,33 @@
-module.exports = {
-  add: add,
-  remove: remove
-};
+var cam = require("rpi-cam");
 
-var queue = [];
+module.exports = Queue;
 
-var state = {
+function Queue() {
+  this.items = [];
+}
+
+Queue.Status = {
   READY: "ready",
   WAITING: "waiting"
 };
 
+Queue.prototype = {
+  add: add,
+  remove: remove
+};
+
 function add(socket) {
-  queue.push({
+  this.items.push({
     socket: socket,
-    status: status.READY
+    state: Queue.Status.READY
   });
 }
 
 function remove(socket) {
-  // ..
+  var items = this.items;
+  for (var i in items) {
+    if (items[i].socket == socket) {
+      items.splice(i, 1);
+    }
+  }
 }

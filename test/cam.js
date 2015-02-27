@@ -1,5 +1,5 @@
-var test = require("tape");
+var tape = require("tape");
 
-test("cam", function(t) {
+tape("cam", function(t) {
   t.end();
 });
