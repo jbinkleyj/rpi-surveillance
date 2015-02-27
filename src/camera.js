@@ -1,5 +1,7 @@
-var cam = require("rpi-cam");
+var Cam = require("rpi-cam");
 var config = require("./config");
+
+var cam = new Cam();
 
 module.exports = {
   init: init,

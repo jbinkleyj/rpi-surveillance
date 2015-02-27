@@ -1,9 +1,10 @@
 var tape = require("tape");
-var cam = require("rpi-cam");
+var Cam = require("rpi-cam");
 var camera = require("../src/camera");
 
 tape("camera", {timeout: 2000}, function(t) {
-  cam.exists(function(err) {
+  var c = new Cam();
+  c.exists(function(err) {
     if (err) {
       t.end();
     } else {

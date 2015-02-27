@@ -1,7 +1,7 @@
 var express = require("express");
 var io = require("socket.io");
 var version = require("../package.json").version;
-var cam = require("./cam");
+var camera = require("./camera");
 var config = require("./config");
 
 module.exports = start;
@@ -9,8 +9,8 @@ module.exports = start;
 var sockets;
 
 function start() {
-  cam();
   serve();
+  camera.init();
 }
 
 function serve() {
