@@ -13,7 +13,8 @@ Queue.Status = {
 
 Queue.prototype = {
   add: add,
-  remove: remove
+  remove: remove,
+  emit: emit
 };
 
 function add(socket) {
@@ -29,5 +30,12 @@ function remove(socket) {
     if (items[i].socket == socket) {
       items.splice(i, 1);
     }
+  }
+}
+
+function emit(event, data) {
+  var items = this.items;
+  for (var i in items) {
+    items[i].socket.emit(event, data);
   }
 }
