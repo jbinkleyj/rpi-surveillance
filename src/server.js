@@ -3,14 +3,17 @@ var io = require("socket.io");
 var version = require("../package.json").version;
 var camera = require("./camera");
 var config = require("./config");
+var Queue = require("./queue");
 
 module.exports = start;
 
 var sockets;
+var queue = new Queue();
 
 function start() {
   serve();
   camera.init();
+  camera.setQueue(queue);
 }
 
 function serve() {
@@ -31,6 +34,8 @@ function serve() {
   console.log("Config:");
   console.log("  host  " + config("host"));
   console.log("  port  " + config("port"));
+  console.log("  path  " + config("path"));
+  console.log("  fps   " + config("camera").fps);
   console.log("");
   console.log("Server started!");
   console.log("Press ctrl-c to stop");
@@ -38,5 +43,5 @@ function serve() {
 }
 
 function init(socket) {
-  socket.emit("init");
+  queue.add(socket);
 }

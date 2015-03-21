@@ -4,14 +4,12 @@ $(function() {
 
 function init() {
   var socket = io();
-  update();
+  socket.on("image", function(file) {
+    update(file);
+    console.log(file);
+  });
 }
 
-function update() {
-  var i = 0;
-  setInterval(function() {
-    var img = $("#preview img");
-    img.attr("src", img.attr("src").split("?")[0] + "?" + i);
-    i++;
-  }, 500);
+function update(file) {
+  $("#preview img").show().attr("src", "images/" + file);
 }

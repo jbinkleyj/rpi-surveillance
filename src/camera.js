@@ -22,22 +22,24 @@ function setQueue(q) {
 }
 
 function snap(fn) {
-  var path = config("images");
-  var fileName = "" + (i++) + ".jpg";
-
+  var file = "" + (i++) + ".jpg";
+  var filePath = config("path") + file;
   cam.still({
     "-w": 640,
     "-h": 480,
     "-awb": "auto",
     "-n": "",
     "-q": 60,
-    "-o": path + fileName,
+    "-o": filePath,
     "-t": 1
-  }, fn);
-
-  if (queue) {
-    queue.emit("image", fileName);
-  }
+  }, function() {
+    if (fn) {
+      fn();
+    }
+    if (queue) {
+      queue.emit("image", file);
+    }
+  });
 }
 
 function check(fn) {
@@ -54,19 +56,16 @@ function run() {
   var fps = config("camera").fps || 1;
   var delay = 1000 / fps;
   
-  var last = 0;
-
+  var ts = 0;
   (function recv() {
-    var now = time();
-    var ms = delay + last - now;
-    
+    var ms = delay + ts - time();
+    console.log(ms);
     if (ms < 0) {
       ms = 0;
     }
-    
     setTimeout(function() {
       snap(recv);
-      last = time();
+      ts = time();
     }, ms);
   })();
 }

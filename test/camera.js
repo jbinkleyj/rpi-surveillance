@@ -1,35 +1,35 @@
 var tape = require("tape");
-var Cam = require("rpi-cam");
+var fs = require("fs");
+var rpi = require("rpi-cam");
 var camera = require("../src/camera");
+var config = require("../src/config");
 var Queue = require("../src/queue");
 
 tape("camera", {timeout: 2000}, function(t) {
-  t.plan(3);
+  t.plan(2);
 
   var q = new Queue();
   var socket = {
-    emit: function() {
-      t.pass();
+    emit: function(event, data) {
+      var file = data;
+      var filePath = config("path") + file;
+      if (fs.existsSync(filePath)) {
+        t.pass();
+      }
     }
   };
+
   q.add(socket);
 
-  var c = new Cam();
+  var c = new rpi();
   c.exists(function(err) {
     if (err) {
       t.fail();
     }
   });
 
+  camera.setQueue(q);
   camera.snap(function() {
     t.pass();
-    next();
   });
-  
-  function next() {
-    camera.setQueue(q);
-    camera.snap(function() {
-      t.pass();
-    });
-  }
 });
