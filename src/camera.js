@@ -2,10 +2,10 @@ var Cam = require("rpi-cam");
 var config = require("./config");
 
 var cam = new Cam();
+var i = 0;
 
 module.exports = {
-  init: init,
-  snap: snap
+  init: init
 };
 
 function init() {
@@ -15,13 +15,15 @@ function init() {
 }
 
 function snap(fn) {
+  var path = config("images");
+  var filePath = path + (i++) + ".jpg";
   cam.still({
     "-w": 640,
     "-h": 480,
     "-awb": "auto",
     "-n": "",
     "-q": 60,
-    "-o": config("images") + "image.jpg",
+    "-o": filePath,
     "-t": 1
   }, fn);
 }
@@ -38,11 +40,25 @@ function check(fn) {
 
 function run() {
   var fps = config("camera").fps || 1;
-  var wait = 1000 / fps;
+  var delay = 1000 / fps;
   
-  snap();
+  var last = 0;
 
-  setInterval(function() {
-    snap();
-  }, wait);
+  (function recv() {
+    var now = time();
+    var ms = delay + last - now;
+    
+    if (ms < 0) {
+      ms = 0;
+    }
+    
+    setTimeout(function() {
+      snap(recv);
+      last = time();
+    }, ms);
+  })();
+}
+
+function time() {
+  return new Date().getTime();
 }
