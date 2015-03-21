@@ -1,11 +1,13 @@
 var Cam = require("rpi-cam");
 var config = require("./config");
 
+var queue;
 var cam = new Cam();
 var i = 0;
 
 module.exports = {
   init: init,
+  setQueue: setQueue,
   snap: snap
 };
 
@@ -15,18 +17,27 @@ function init() {
   });
 }
 
+function setQueue(q) {
+  queue = q;
+}
+
 function snap(fn) {
   var path = config("images");
-  var filePath = path + (i++) + ".jpg";
+  var fileName = "" + (i++) + ".jpg";
+
   cam.still({
     "-w": 640,
     "-h": 480,
     "-awb": "auto",
     "-n": "",
     "-q": 60,
-    "-o": filePath,
+    "-o": path + fileName,
     "-t": 1
   }, fn);
+
+  if (queue) {
+    queue.emit("image", fileName);
+  }
 }
 
 function check(fn) {
