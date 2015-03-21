@@ -22,8 +22,9 @@ function setQueue(q) {
 }
 
 function snap(fn) {
-  var file = "" + (i++) + ".jpg";
+  var file = config("debug") ? "debug.jpg" : "" + (i++) + ".jpg";
   var filePath = config("path") + file;
+
   cam.still({
     "-w": 640,
     "-h": 480,
@@ -59,7 +60,6 @@ function run() {
   var ts = 0;
   (function recv() {
     var ms = delay + ts - time();
-    console.log(ms);
     if (ms < 0) {
       ms = 0;
     }

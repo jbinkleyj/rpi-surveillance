@@ -2,14 +2,13 @@ $(function() {
   init();
 });
 
-function init() {
-  var socket = io();
-  socket.on("image", function(file) {
-    update(file);
-    console.log(file);
-  });
-}
+var socket = io();
 
-function update(file) {
-  $("#preview img").show().attr("src", "images/" + file);
+function init() {
+  var i = 0;
+  socket.on("image", function(file) {
+    console.log(file);
+    $("#preview img").show().attr("src", "images/" + file + "?" + i);
+    i++;
+  });
 }
