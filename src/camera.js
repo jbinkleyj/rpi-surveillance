@@ -5,7 +5,8 @@ var cam = new Cam();
 var i = 0;
 
 module.exports = {
-  init: init
+  init: init,
+  snap: snap
 };
 
 function init() {
