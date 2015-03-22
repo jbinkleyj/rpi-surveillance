@@ -44,4 +44,7 @@ function serve() {
 
 function init(socket) {
   queue.add(socket);
+  socket.on("disconnect", function() {
+    queue.remove(socket);
+  });
 }
